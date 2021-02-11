@@ -34,7 +34,7 @@ module Mjml
           mjml_template_content(headers, scope)
         end
 
-      Mjml.template(content)
+      Mjml.template(content, headers[:template_variables], self)
     end
 
     def mjml_layout_content(headers, scope)
