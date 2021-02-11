@@ -6,6 +6,7 @@ module Mjml
       headers[:subject] ||= I18n.t("mailers.#{mailer_name}.#{action_name}.subject", headers[:subject_variables])
       headers[:template_name] ||= action_name
       headers[:template_path] ||= "#{Dir.pwd}/app/views/mailers/#{mailer_name}"
+      headers[:layout_path] ||= "#{Dir.pwd}/app/views/layouts/#{self.class._layout}"
 
       mail(headers) do |format|
         format.html { mjml_content(headers, scope) }
@@ -38,7 +39,7 @@ module Mjml
     end
 
     def mjml_layout_content(headers, scope)
-      erb_layout = Tilt::ERBTemplate.new("#{Dir.pwd}/app/views/layouts/#{self.class._layout}.mjml")
+      erb_layout = Tilt::ERBTemplate.new("#{headers[:layout_path]}.mjml")
       erb_template = Tilt::ERBTemplate.new("#{headers[:template_path]}/#{headers[:template_name]}.mjml")
       erb_layout.render(scope) { erb_template.render(scope) }
     end
