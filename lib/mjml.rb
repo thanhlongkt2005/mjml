@@ -14,11 +14,11 @@ module Mjml
     Render.new(path, scope, block).execute
   end
 
-  def self.template(template_mjml)
+  def self.template(template_mjml, args = {}, instance = nil)
     retries ||= 0
     mjml_path = "#{Dir.pwd}/tmp/template-#{SecureRandom.uuid}.mjml"
     File.write(mjml_path, template_mjml)
-    render(mjml_path)
+    render(mjml_path, args, instance)
   rescue Errno::ENOENT
     Dir.mkdir "#{Dir.pwd}/tmp"
     retry if (retries += 1) < 3
