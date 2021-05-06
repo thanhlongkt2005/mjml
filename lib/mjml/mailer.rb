@@ -17,9 +17,9 @@ module Mjml
       self.class.name.underscore.sub(/_mailer$/, '')
     end
 
-    def t(pharse, args = {})
+    def t(pharse, **args)
       if pharse =~ /\A\./
-        I18n.t("mailers.#{mailer_name}.#{action_name}#{pharse}", args)
+        I18n.t("mailers.#{mailer_name}.#{action_name}#{pharse}", **args)
       else
         super
       end
